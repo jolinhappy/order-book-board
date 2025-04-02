@@ -5,9 +5,9 @@ const transformOrderData = (orderData: [string, string][]) => {
   return orderData.map((item: [string, string]) => {
     sum = sum.plus(bn(item[1]));
     return {
-      price: bn(item[0]).toFixed(2),
-      quantity: bn(item[1]).toFixed(2),
-      totalQuantity: sum.toFixed(2),
+      price: bn(item[0]).toString(),
+      quantity: bn(item[1]).toString(),
+      totalQuantity: sum.toString(),
     };
   });
 };
