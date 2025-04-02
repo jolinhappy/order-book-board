@@ -71,6 +71,7 @@ const QuotesInfo = ({ type }: { type: QuoteType }) => {
 
         return (
           <div
+            key={item.price}
             className={cn(
               'flex text-sm py-1 px-3 font-bold relative hover:bg-blue-dark cursor-pointer',
               priceChangeBackgroundColor,
