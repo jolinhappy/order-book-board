@@ -1,6 +1,6 @@
-export interface OrderDataResponse {
+export interface WebSocketResponse<T> {
   topic: string;
-  data: OrderData;
+  data: T;
 }
 
 export interface OrderData {
@@ -39,3 +39,6 @@ export interface PriceInfo {
   timestamp: number;
   tradeId: number;
 }
+
+export type OrderDataResponse = WebSocketResponse<OrderData>;
+export type PriceInfoResponse = WebSocketResponse<PriceInfo[]>;
