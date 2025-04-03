@@ -5,6 +5,7 @@ import useOrderData from '@/hooks/useOrderData';
 import { useEffect, useRef, useState } from 'react';
 import transformOrderData from '@/utils/transformOrderData';
 import bn from 'bignumber.js';
+import Spinner from '@/components/Spinner';
 
 const QuotesInfo = ({ type }: { type: QuoteType }) => {
   const orderData = useOrderData();
@@ -62,6 +63,14 @@ const QuotesInfo = ({ type }: { type: QuoteType }) => {
     setMaxQuantity(targetRows ? targetRows.totalQuantity : '0');
     previousData.current = orderRows;
   }, [orderRows, type]);
+
+  if (!orderData) {
+    return (
+      <div className="h-[224px] flex justify-center items-center">
+        <Spinner />
+      </div>
+    );
+  }
 
   return (
     <div className="overflow-hidden">
