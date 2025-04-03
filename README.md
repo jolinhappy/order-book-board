@@ -1,4 +1,4 @@
-# Order Book Borad
+# Order Book Board
 Can confirm real-time order book information.
 
 <img width="359" alt="image" src="https://github.com/user-attachments/assets/3473b826-0b06-440a-8632-a3c182e75d33" />
