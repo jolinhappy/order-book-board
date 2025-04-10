@@ -1,14 +1,12 @@
-import { OrderBookDataItem, OrderData, PriceChangeStatus, QuoteType } from '@/types/order';
+import { OrderBookDataItem, PriceChangeStatus, QuoteType } from '@/types/order';
 import formateNumber from '@/utils/formateNumber';
 import { cn } from '@/utils/cn';
-import useOrderData from '@/hooks/useOrderData';
 import { useEffect, useRef, useState } from 'react';
 import transformOrderData from '@/utils/transformOrderData';
 import bn from 'bignumber.js';
 import Spinner from '@/components/Spinner';
 
-const QuotesInfo = ({ type }: { type: QuoteType }) => {
-  const orderData = useOrderData();
+const QuotesInfo = ({ type, orderData }: { type: QuoteType; orderData: [string, string][] }) => {
   const targetDataCount = 8;
   const [orderRows, setOrderRows] = useState<OrderBookDataItem[]>([]);
   const [maxQuantity, setMaxQuantity] = useState<string>('0');
@@ -45,13 +43,13 @@ const QuotesInfo = ({ type }: { type: QuoteType }) => {
   };
 
   useEffect(() => {
-    if (!orderData || orderData[type].length < targetDataCount) return;
-    const getAskOrderData = (allData: OrderData) => {
-      const dataWithoutZero = allData.asks.filter((order) => Number(order[1]) !== 0);
-      return dataWithoutZero.slice(dataWithoutZero.length - targetDataCount, allData.asks.length).reverse();
+    if (!orderData || orderData.length < targetDataCount) return;
+    const getAskOrderData = (allData: [string, string][]) => {
+      const dataWithoutZero = allData.filter((order) => Number(order[1]) !== 0);
+      return dataWithoutZero.slice(dataWithoutZero.length - targetDataCount, allData.length).reverse();
     };
     // 因為ask 也是多到少的排序，所以要先倒過來做加總動作，在加總完成後再倒過來（少到多）
-    const orders = type === QuoteType.ASKS ? getAskOrderData(orderData) : orderData.bids.slice(0, targetDataCount);
+    const orders = type === QuoteType.ASKS ? getAskOrderData(orderData) : orderData.slice(0, targetDataCount);
 
     const formattedOrders = transformOrderData(orders);
 

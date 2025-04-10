@@ -1,8 +1,10 @@
 import QuotesInfo from '@/components/QuotesInfo';
 import { QuoteType } from '@/types/order';
 import CurrentPriceInfo from '@/components/CurrentPriceInfo';
+import useOrderData from '@/hooks/useOrderData';
 
 const OrderBoard = () => {
+  const orderData = useOrderData();
   return (
     <div className="bg-black w-80">
       <p className="py-1 px-3 font-bold border-b border-blue-divider">Order Book</p>
@@ -18,9 +20,9 @@ const OrderBoard = () => {
           <p>Total</p>
         </div>
       </div>
-      <QuotesInfo type={QuoteType.ASKS} />
+      <QuotesInfo orderData={orderData?.asks || []} type={QuoteType.ASKS} />
       <CurrentPriceInfo />
-      <QuotesInfo type={QuoteType.BIDS} />
+      <QuotesInfo orderData={orderData?.asks || []} type={QuoteType.BIDS} />
     </div>
   );
 };
