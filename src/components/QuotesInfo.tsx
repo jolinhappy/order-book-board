@@ -44,12 +44,11 @@ const QuotesInfo = ({ type, orderData }: { type: QuoteType; orderData: [string, 
 
   useEffect(() => {
     if (!orderData || orderData.length < targetDataCount) return;
-    const getAskOrderData = (allData: [string, string][]) => {
-      const dataWithoutZero = allData.filter((order) => Number(order[1]) !== 0);
-      return dataWithoutZero.slice(dataWithoutZero.length - targetDataCount, allData.length).reverse();
-    };
     // 因為ask 也是多到少的排序，所以要先倒過來做加總動作，在加總完成後再倒過來（少到多）
-    const orders = type === QuoteType.ASKS ? getAskOrderData(orderData) : orderData.slice(0, targetDataCount);
+    const orders =
+      type === QuoteType.ASKS
+        ? orderData.slice(orderData.length - targetDataCount, orderData.length)
+        : orderData.slice(0, targetDataCount);
 
     const formattedOrders = transformOrderData(orders);
 

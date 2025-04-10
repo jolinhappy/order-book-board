@@ -5,6 +5,8 @@ import useOrderData from '@/hooks/useOrderData';
 
 const OrderBoard = () => {
   const orderData = useOrderData();
+  const askData = orderData?.asks.filter((order) => Number(order[1]) !== 0) || [];
+  const bidsData = orderData?.bids || [];
   return (
     <div className="bg-black w-80">
       <p className="py-1 px-3 font-bold border-b border-blue-divider">Order Book</p>
@@ -20,9 +22,9 @@ const OrderBoard = () => {
           <p>Total</p>
         </div>
       </div>
-      <QuotesInfo orderData={orderData?.asks || []} type={QuoteType.ASKS} />
+      <QuotesInfo orderData={askData} type={QuoteType.ASKS} />
       <CurrentPriceInfo />
-      <QuotesInfo orderData={orderData?.asks || []} type={QuoteType.BIDS} />
+      <QuotesInfo orderData={bidsData} type={QuoteType.BIDS} />
     </div>
   );
 };
